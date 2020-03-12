@@ -1,41 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default class Search extends React.Component {
+function Search({searchSubreddit}) {
+    const [search, setSearch] = useState('');
 
-    constructor() {
-        super()
-        this.state = {
-            search: ''
-        }
+    const onChange = e => {
+        setSearch(e.target.value)
     }
 
-    onChange = e => {
-        this.setState({ [e.target.name]: e.target.value })
-    }
-
-    onSubmit = e => {
+    const onSubmit = e => {
         e.preventDefault();
-        this.props.searchSubreddit(this.state.search);
-        this.setState({search: ''});
+        searchSubreddit(search);
+        setSearch('');
     }
 
-    render() {
-        return (
-            <form onSubmit={this.onSubmit} className="input-group my-4">
-                <input 
-                    type="text" 
-                    onChange={this.onChange} 
-                    name="search"
-                    value={this.state.search}
-                    className="form-control"
-                    placeholder="Search for a subreddit..."
-                />
-                <div className="input-group-append">
-                    <button type="submit" className="btn btn-primary ">
-                        Search
+    return (
+        <form onSubmit={onSubmit} className="input-group my-4">
+            <input
+                type="text"
+                onChange={onChange}
+                name="search"
+                value={search}
+                className="form-control"
+                placeholder="Search for a subreddit..."
+            />
+            <div className="input-group-append">
+                <button type="submit" className="btn btn-primary ">
+                    Search
                     </button>
-                </div>
-            </form>
-        )
-    }
+            </div>
+        </form>
+    )
 }
+
+export default Search;
